@@ -4,371 +4,453 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crucipuzzle - Buon Compleanno</title>
+    <title>Happy Birthday - Cinema Edition</title>
     <style>
-        @media print {
-            body { margin: 0; }
-            .no-print { display: none; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
 ```
     body {
-        font-family: 'Arial', sans-serif;
-        max-width: 900px;
-        margin: 20px auto;
-        padding: 20px;
-        background: #fff;
+        font-family: 'Georgia', serif;
+        background: #0a0a0a;
+        color: #fff;
+        overflow-x: hidden;
+        min-height: 100vh;
     }
-    
-    .header {
+
+    .film-grain {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="noise"><feTurbulence baseFrequency="0.9" /></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>');
+        pointer-events: none;
+        z-index: 1;
+        animation: grain 8s steps(10) infinite;
+    }
+
+    @keyframes grain {
+        0%, 100% { transform: translate(0, 0); }
+        10% { transform: translate(-5%, -10%); }
+        30% { transform: translate(3%, -15%); }
+        50% { transform: translate(12%, 9%); }
+        70% { transform: translate(9%, 4%); }
+        90% { transform: translate(-1%, 7%); }
+    }
+
+    .spotlight {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.7) 100%);
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        position: relative;
+        z-index: 3;
+    }
+
+    .ticket {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        border-radius: 20px;
+        padding: 0;
+        margin: 40px auto;
+        max-width: 800px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        border: 3px solid #d4af37;
+        overflow: hidden;
+        animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .ticket-header {
+        background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+        padding: 30px;
         text-align: center;
-        margin-bottom: 30px;
-        padding: 25px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border-radius: 15px;
+        border-bottom: 3px dashed #0a0a0a;
     }
-    
-    .header h1 {
-        margin: 0;
+
+    .ticket-header h1 {
         font-size: 3em;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        color: #0a0a0a;
+        font-weight: 900;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 0px rgba(255,255,255,0.3);
     }
-    
-    .warning {
-        background: #ff6b6b;
-        color: white;
-        padding: 18px;
+
+    .ticket-header p {
+        font-size: 1.2em;
+        color: #1a1a2e;
+        font-weight: 600;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .ticket-body {
+        padding: 40px;
+    }
+
+    .ticket-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 30px;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .info-item {
+        background: rgba(212, 175, 55, 0.1);
+        padding: 15px;
         border-radius: 10px;
-        text-align: center;
-        margin: 25px 0;
+        border-left: 4px solid #d4af37;
+    }
+
+    .info-label {
+        font-size: 0.85em;
+        color: #d4af37;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+    }
+
+    .info-value {
         font-size: 1.3em;
-        font-weight: bold;
-        border: 3px solid #c92a2a;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        color: #fff;
+        font-weight: 600;
     }
-    
-    .puzzle-container {
+
+    .movie-poster-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
         margin: 30px 0;
-        text-align: center;
     }
-    
-    .grid {
-        display: inline-block;
-        border: 3px solid #333;
-        background: white;
-        padding: 10px;
+
+    .poster-frame {
+        position: relative;
+        border: 5px solid #d4af37;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        transition: transform 0.3s ease;
+        aspect-ratio: 2/3;
     }
-    
-    .row {
-        display: flex;
+
+    .poster-frame:hover {
+        transform: scale(1.05) rotate(1deg);
     }
-    
-    .cell {
-        width: 40px;
-        height: 40px;
-        border: 1px solid #999;
+
+    .poster-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 18px;
-        font-weight: bold;
-        background: white;
-        font-family: 'Courier New', monospace;
+        font-size: 3em;
     }
-    
-    .words-list {
-        margin: 30px auto;
-        max-width: 700px;
-        padding: 20px;
-        background: #f8f9fa;
-        border-radius: 10px;
-        border: 2px solid #667eea;
+
+    .poster-frame img,
+    .poster-frame video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
-    
-    .words-list h3 {
-        color: #667eea;
-        text-align: center;
-        margin-top: 0;
-    }
-    
-    .words-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        margin-top: 15px;
-    }
-    
-    .word-item {
-        padding: 8px;
-        background: white;
-        border-radius: 5px;
-        text-align: center;
-        border: 1px solid #ddd;
-    }
-    
-    .instructions {
-        background: #e3f2fd;
-        padding: 20px;
-        border-radius: 10px;
-        margin: 20px 0;
-        border-left: 4px solid #2196f3;
-    }
-    
-    .instructions h3 {
-        color: #1976d2;
-        margin-top: 0;
-    }
-    
-    .solution-box {
-        margin-top: 30px;
-        padding: 25px;
-        background: #fff3cd;
-        border: 3px dashed #ff6b6b;
-        border-radius: 10px;
-    }
-    
-    .solution-box h3 {
-        color: #c92a2a;
-        margin-top: 0;
-        text-align: center;
-    }
-    
-    .solution-text {
-        font-size: 14px;
-        line-height: 2;
-        letter-spacing: 3px;
-        text-align: center;
-        margin-top: 20px;
+
+    .poster-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0,0,0,0.9));
         padding: 15px;
-        background: white;
-        border-radius: 5px;
-        min-height: 40px;
+        font-size: 0.9em;
+        text-align: center;
+        font-family: 'Arial', sans-serif;
     }
-    
-    button {
-        background: #667eea;
+
+    .message-box {
+        background: rgba(212, 175, 55, 0.1);
+        border: 2px solid #d4af37;
+        border-radius: 15px;
+        padding: 30px;
+        margin: 30px 0;
+        text-align: center;
+    }
+
+    .message-box h2 {
+        color: #d4af37;
+        font-size: 2em;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+
+    .message-box p {
+        font-size: 1.15em;
+        line-height: 1.8;
+        color: #e0e0e0;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .cta-section {
+        text-align: center;
+        margin: 40px 0;
+    }
+
+    .cinema-btn {
+        background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
         color: white;
-        border: none;
-        padding: 15px 30px;
-        font-size: 16px;
-        border-radius: 8px;
+        border: 3px solid #d4af37;
+        padding: 20px 50px;
+        font-size: 1.4em;
+        font-weight: bold;
+        border-radius: 10px;
         cursor: pointer;
-        margin: 10px 5px;
+        box-shadow: 0 10px 30px rgba(231, 76, 60, 0.4);
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-family: 'Arial', sans-serif;
     }
-    
-    button:hover {
-        background: #5568d3;
+
+    .cinema-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(231, 76, 60, 0.6);
+    }
+
+    .cinema-btn:active {
+        transform: translateY(-2px);
+    }
+
+    .confetti {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+    }
+
+    .confetti-piece {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: #d4af37;
+        animation: confettiFall linear infinite;
+    }
+
+    @keyframes confettiFall {
+        to {
+            transform: translateY(100vh) rotate(720deg);
+        }
+    }
+
+    .clapperboard {
+        position: absolute;
+        font-size: 3em;
+        animation: clap 0.5s ease;
+    }
+
+    @keyframes clap {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(-15deg); }
+        75% { transform: rotate(15deg); }
+    }
+
+    @media (max-width: 768px) {
+        .ticket-header h1 {
+            font-size: 2em;
+        }
+        .ticket-info {
+            grid-template-columns: 1fr;
+        }
+        .movie-poster-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 ```
 
 </head>
 <body>
-    <div class="header">
-        <h1>🎉 BUON COMPLEANNO! 🎉</h1>
-    </div>
+    <div class="film-grain"></div>
+    <div class="spotlight"></div>
+    <div class="confetti" id="confetti"></div>
 
 ```
-<div class="warning">
-    ⚠️ APRI SOLO DOPO AVER RISOLTO! ⚠️
-</div>
+<div class="container">
+    <div class="ticket">
+        <div class="ticket-header">
+            <h1>🎬 Buon Compleanno 🎬</h1>
+            <p>Biglietto Cinema - Edizione Speciale</p>
+        </div>
+        
+        <div class="ticket-body">
+            <div class="ticket-info">
+                <div class="info-item">
+                    <div class="info-label">Film</div>
+                    <div class="info-value">Il Tuo Anno Migliore</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Genere</div>
+                    <div class="info-value">Avventura/Commedia</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Durata</div>
+                    <div class="info-value">365 giorni di film</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Rating</div>
+                    <div class="info-value">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
 
-<div class="instructions">
-    <h3>📋 Come giocare:</h3>
-    <p><strong>1.</strong> Trova e cerchia tutte le parole elencate qui sotto nella griglia</p>
-    <p><strong>2.</strong> Le parole possono essere in orizzontale, verticale o diagonale</p>
-    <p><strong>3.</strong> Le lettere che rimangono NON cerchiate formano la SORPRESA!</p>
-    <p><strong>4.</strong> Leggi le lettere non cerchiate dall'alto in basso, da sinistra a destra</p>
-</div>
+            <div class="movie-poster-grid">
+                <div class="poster-frame">
+                    <div class="poster-placeholder">🎥</div>
+                    <div class="poster-caption">Scena 1: I nostri momenti migliori</div>
+                    <!-- Sostituisci con: <img src="foto1.jpg" alt="memory 1"> -->
+                </div>
+                
+                <div class="poster-frame">
+                    <div class="poster-placeholder">🎞️</div>
+                    <div class="poster-caption">Scena 2: Risate e avventure</div>
+                    <!-- Sostituisci con: <img src="foto2.jpg" alt="memory 2"> -->
+                </div>
+                
+                <div class="poster-frame">
+                    <div class="poster-placeholder">📽️</div>
+                    <div class="poster-caption">Scena 3: Ricordi indimenticabili</div>
+                    <!-- Sostituisci con: <video src="video1.mp4" controls></video> -->
+                </div>
+                
+                <div class="poster-frame">
+                    <div class="poster-placeholder">🎬</div>
+                    <div class="poster-caption">Scena 4: L'amicizia perfetta</div>
+                    <!-- Sostituisci con: <img src="foto3.jpg" alt="memory 3"> -->
+                </div>
+            </div>
 
-<div class="puzzle-container">
-    <h2 style="color: #667eea;">🔍 CRUCIPUZZLE</h2>
-    <div class="grid">
-        <div class="row">
-            <div class="cell">C</div>
-            <div class="cell">A</div>
-            <div class="cell">S</div>
-            <div class="cell">A</div>
-            <div class="cell">O</div>
-            <div class="cell">P</div>
-            <div class="cell">I</div>
-            <div class="cell">A</div>
-            <div class="cell">N</div>
-            <div class="cell">O</div>
-        </div>
-        <div class="row">
-            <div class="cell">O</div>
-            <div class="cell">L</div>
-            <div class="cell">I</div>
-            <div class="cell">B</div>
-            <div class="cell">R</div>
-            <div class="cell">O</div>
-            <div class="cell">N</div>
-            <div class="cell">C</div>
-            <div class="cell">A</div>
-            <div class="cell">R</div>
-        </div>
-        <div class="row">
-            <div class="cell">N</div>
-            <div class="cell">U</div>
-            <div class="cell">V</div>
-            <div class="cell">O</div>
-            <div class="cell">L</div>
-            <div class="cell">A</div>
-            <div class="cell">C</div>
-            <div class="cell">E</div>
-            <div class="cell">R</div>
-            <div class="cell">T</div>
-        </div>
-        <div class="row">
-            <div class="cell">C</div>
-            <div class="cell">H</div>
-            <div class="cell">I</div>
-            <div class="cell">T</div>
-            <div class="cell">A</div>
-            <div class="cell">R</div>
-            <div class="cell">R</div>
-            <div class="cell">A</div>
-            <div class="cell">T</div>
-            <div class="cell">R</div>
-        </div>
-        <div class="row">
-            <div class="cell">E</div>
-            <div class="cell">S</div>
-            <div class="cell">T</div>
-            <div class="cell">A</div>
-            <div class="cell">T</div>
-            <div class="cell">E</div>
-            <div class="cell">O</div>
-            <div class="cell">N</div>
-            <div class="cell">O</div>
-            <div class="cell">E</div>
-        </div>
-        <div class="row">
-            <div class="cell">R</div>
-            <div class="cell">O</div>
-            <div class="cell">S</div>
-            <div class="cell">A</div>
-            <div class="cell">A</div>
-            <div class="cell">N</div>
-            <div class="cell">G</div>
-            <div class="cell">G</div>
-            <div class="cell">E</div>
-            <div class="cell">T</div>
-        </div>
-        <div class="row">
-            <div class="cell">T</div>
-            <div class="cell">E</div>
-            <div class="cell">M</div>
-            <div class="cell">P</div>
-            <div class="cell">O</div>
-            <div class="cell">L</div>
-            <div class="cell">E</div>
-            <div class="cell">I</div>
-            <div class="cell">L</div>
-            <div class="cell">T</div>
-        </div>
-        <div class="row">
-            <div class="cell">O</div>
-            <div class="cell">M</div>
-            <div class="cell">A</div>
-            <div class="cell">R</div>
-            <div class="cell">E</div>
-            <div class="cell">I</div>
-            <div class="cell">L</div>
-            <div class="cell">I</div>
-            <div class="cell">I</div>
-            <div class="cell">O</div>
-        </div>
-        <div class="row">
-            <div class="cell">V</div>
-            <div class="cell">E</div>
-            <div class="cell">N</div>
-            <div class="cell">T</div>
-            <div class="cell">O</div>
-            <div class="cell">N</div>
-            <div class="cell">U</div>
-            <div class="cell">N</div>
-            <div class="cell">C</div>
-            <div class="cell">N</div>
-        </div>
-        <div class="row">
-            <div class="cell">E</div>
-            <div class="cell">R</div>
-            <div class="cell">B</div>
-            <div class="cell">A</div>
-            <div class="cell">S</div>
-            <div class="cell">O</div>
-            <div class="cell">L</div>
-            <div class="cell">E</div>
-            <div class="cell">A</div>
-            <div class="cell">I</div>
-        </div>
-        <div class="row">
-            <div class="cell">S</div>
-            <div class="cell">T</div>
-            <div class="cell">E</div>
-            <div class="cell">L</div>
-            <div class="cell">L</div>
-            <div class="cell">A</div>
-            <div class="cell">M</div>
-            <div class="cell">A</div>
-            <div class="cell">N</div>
-            <div class="cell">L</div>
-        </div>
-        <div class="row">
-            <div class="cell">T</div>
-            <div class="cell">R</div>
-            <div class="cell">E</div>
-            <div class="cell">N</div>
-            <div class="cell">O</div>
-            <div class="cell">G</div>
-            <div class="cell">O</div>
-            <div class="cell">G</div>
-            <div class="cell">G</div>
-            <div class="cell">O</div>
+            <div class="message-box">
+                <h2>Trama del Film</h2>
+                <p>
+                    Oggi celebriamo la premiere del tuo nuovo anno, un film che promette di essere 
+                    il migliore della saga. Con te come protagonista, ogni scena è un capolavoro.
+                    <br><br>
+                    Grazie per essere la migliore compagna di avventure, per tutte le risate condivise 
+                    e per rendere ogni momento degno di un oscar. La nostra amicizia merita 
+                    un posto nella hall of fame.
+                    <br><br>
+                    Questo è solo l'inizio del tuo blockbuster personale. 
+                    <br><br>
+                    Buon compleanno! 🎂🎬
+                </p>
+            </div>
+
+            <div class="cta-section">
+                <button class="cinema-btn" onclick="startShow()">🎬 Luci, Camera, Azione! 🎬</button>
+            </div>
         </div>
     </div>
-</div>
-
-<div class="words-list">
-    <h3>🔤 PAROLE DA TROVARE (15 parole):</h3>
-    <div class="words-grid">
-        <div class="word-item">CASA</div>
-        <div class="word-item">LIBRO</div>
-        <div class="word-item">NUVOLA</div>
-        <div class="word-item">CHITARRA</div>
-        <div class="word-item">ESTATE</div>
-        <div class="word-item">ROSA</div>
-        <div class="word-item">TEMPO</div>
-        <div class="word-item">MARE</div>
-        <div class="word-item">VENTO</div>
-        <div class="word-item">ERBA</div>
-        <div class="word-item">STELLA</div>
-        <div class="word-item">TRENO</div>
-        <div class="word-item">SOLE</div>
-        <div class="word-item">PIANO</div>
-        <div class="word-item">ARTE</div>
-    </div>
-</div>
-
-<div class="solution-box">
-    <h3>🎁 LA TUA SORPRESA È...</h3>
-    <p style="text-align: center;"><em>Scrivi qui sotto le lettere rimaste non cerchiate, nell'ordine:</em></p>
-    <div class="solution-text">
-        _ _ _ _ _ _ _ _   _ _ _ _ _ _ _ _   _ _ _ _ _
-    </div>
-</div>
-
-<div style="text-align: center; margin-top: 30px;" class="no-print">
-    <button onclick="window.print()">🖨️ Stampa PDF</button>
 </div>
 
 <script>
-    function savePDF() {
-        window.print();
+    const colors = ['#d4af37', '#f4d03f', '#e74c3c', '#c0392b', '#fff'];
+    const symbols = ['🎬', '🎥', '🎞️', '📽️', '🍿', '⭐', '🎭', '🏆'];
+    let showActive = false;
+
+    function createConfetti() {
+        if (!showActive) return;
+        
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random() * 100 + '%';
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.width = Math.random() * 15 + 5 + 'px';
+        piece.style.height = piece.style.width;
+        piece.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        piece.style.opacity = Math.random() * 0.7 + 0.3;
+        
+        document.getElementById('confetti').appendChild(piece);
+        
+        setTimeout(() => piece.remove(), 5000);
     }
+
+    function createClapperboard() {
+        const clapper = document.createElement('div');
+        clapper.className = 'clapperboard';
+        clapper.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        clapper.style.left = Math.random() * 80 + 10 + '%';
+        clapper.style.top = Math.random() * 80 + 10 + '%';
+        clapper.style.position = 'fixed';
+        clapper.style.zIndex = '9998';
+        
+        document.body.appendChild(clapper);
+        
+        setTimeout(() => clapper.remove(), 500);
+    }
+
+    function startShow() {
+        showActive = !showActive;
+        
+        if (showActive) {
+            // Confetti rain
+            const confettiInterval = setInterval(() => {
+                if (!showActive) {
+                    clearInterval(confettiInterval);
+                    return;
+                }
+                createConfetti();
+                createConfetti();
+            }, 100);
+            
+            // Clapperboards
+            const clapperInterval = setInterval(() => {
+                if (!showActive) {
+                    clearInterval(clapperInterval);
+                    return;
+                }
+                createClapperboard();
+            }, 300);
+            
+            // Stop after 10 seconds
+            setTimeout(() => {
+                showActive = false;
+            }, 10000);
+        }
+    }
+
+    // Animazione iniziale leggera
+    window.addEventListener('load', () => {
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.backgroundColor = '#d4af37';
+                piece.style.animationDuration = '4s';
+                document.getElementById('confetti').appendChild(piece);
+                setTimeout(() => piece.remove(), 4000);
+            }, i * 400);
+        }
+    });
 </script>
 ```
 
