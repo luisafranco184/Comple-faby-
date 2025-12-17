@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crucipuzzle - Buon Compleanno</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none; }
+        }
+
+```
+    body {
+        font-family: 'Arial', sans-serif;
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #fff;
+    }
+    
+    .header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 25px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 15px;
+    }
+    
+    .header h1 {
+        margin: 0;
+        font-size: 3em;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .warning {
+        background: #ff6b6b;
+        color: white;
+        padding: 18px;
+        border-radius: 10px;
+        text-align: center;
+        margin: 25px 0;
+        font-size: 1.3em;
+        font-weight: bold;
+        border: 3px solid #c92a2a;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .puzzle-container {
+        margin: 30px 0;
+        text-align: center;
+    }
+    
+    .grid {
+        display: inline-block;
+        border: 3px solid #333;
+        background: white;
+        padding: 10px;
+    }
+    
+    .row {
+        display: flex;
+    }
+    
+    .cell {
+        width: 40px;
+        height: 40px;
+        border: 1px solid #999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: bold;
+        background: white;
+        font-family: 'Courier New', monospace;
+    }
+    
+    .words-list {
+        margin: 30px auto;
+        max-width: 700px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border: 2px solid #667eea;
+    }
+    
+    .words-list h3 {
+        color: #667eea;
+        text-align: center;
+        margin-top: 0;
+    }
+    
+    .words-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 15px;
+    }
+    
+    .word-item {
+        padding: 8px;
+        background: white;
+        border-radius: 5px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+    
+    .instructions {
+        background: #e3f2fd;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border-left: 4px solid #2196f3;
+    }
+    
+    .instructions h3 {
+        color: #1976d2;
+        margin-top: 0;
+    }
+    
+    .solution-box {
+        margin-top: 30px;
+        padding: 25px;
+        background: #fff3cd;
+        border: 3px dashed #ff6b6b;
+        border-radius: 10px;
+    }
+    
+    .solution-box h3 {
+        color: #c92a2a;
+        margin-top: 0;
+        text-align: center;
+    }
+    
+    .solution-text {
+        font-size: 14px;
+        line-height: 2;
+        letter-spacing: 3px;
+        text-align: center;
+        margin-top: 20px;
+        padding: 15px;
+        background: white;
+        border-radius: 5px;
+        min-height: 40px;
+    }
+    
+    button {
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin: 10px 5px;
+    }
+    
+    button:hover {
+        background: #5568d3;
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="header">
+        <h1>🎉 BUON COMPLEANNO! 🎉</h1>
+    </div>
+
+```
+<div class="warning">
+    ⚠️ APRI SOLO DOPO AVER RISOLTO! ⚠️
+</div>
+
+<div class="instructions">
+    <h3>📋 Come giocare:</h3>
+    <p><strong>1.</strong> Trova e cerchia tutte le parole elencate qui sotto nella griglia</p>
+    <p><strong>2.</strong> Le parole possono essere in orizzontale, verticale o diagonale</p>
+    <p><strong>3.</strong> Le lettere che rimangono NON cerchiate formano la SORPRESA!</p>
+    <p><strong>4.</strong> Leggi le lettere non cerchiate dall'alto in basso, da sinistra a destra</p>
+</div>
+
+<div class="puzzle-container">
+    <h2 style="color: #667eea;">🔍 CRUCIPUZZLE</h2>
+    <div class="grid">
+        <div class="row">
+            <div class="cell">C</div>
+            <div class="cell">A</div>
+            <div class="cell">S</div>
+            <div class="cell">A</div>
+            <div class="cell">O</div>
+            <div class="cell">P</div>
+            <div class="cell">I</div>
+            <div class="cell">A</div>
+            <div class="cell">N</div>
+            <div class="cell">O</div>
+        </div>
+        <div class="row">
+            <div class="cell">O</div>
+            <div class="cell">L</div>
+            <div class="cell">I</div>
+            <div class="cell">B</div>
+            <div class="cell">R</div>
+            <div class="cell">O</div>
+            <div class="cell">N</div>
+            <div class="cell">C</div>
+            <div class="cell">A</div>
+            <div class="cell">R</div>
+        </div>
+        <div class="row">
+            <div class="cell">N</div>
+            <div class="cell">U</div>
+            <div class="cell">V</div>
+            <div class="cell">O</div>
+            <div class="cell">L</div>
+            <div class="cell">A</div>
+            <div class="cell">C</div>
+            <div class="cell">E</div>
+            <div class="cell">R</div>
+            <div class="cell">T</div>
+        </div>
+        <div class="row">
+            <div class="cell">C</div>
+            <div class="cell">H</div>
+            <div class="cell">I</div>
+            <div class="cell">T</div>
+            <div class="cell">A</div>
+            <div class="cell">R</div>
+            <div class="cell">R</div>
+            <div class="cell">A</div>
+            <div class="cell">T</div>
+            <div class="cell">R</div>
+        </div>
+        <div class="row">
+            <div class="cell">E</div>
+            <div class="cell">S</div>
+            <div class="cell">T</div>
+            <div class="cell">A</div>
+            <div class="cell">T</div>
+            <div class="cell">E</div>
+            <div class="cell">O</div>
+            <div class="cell">N</div>
+            <div class="cell">O</div>
+            <div class="cell">E</div>
+        </div>
+        <div class="row">
+            <div class="cell">R</div>
+            <div class="cell">O</div>
+            <div class="cell">S</div>
+            <div class="cell">A</div>
+            <div class="cell">A</div>
+            <div class="cell">N</div>
+            <div class="cell">G</div>
+            <div class="cell">G</div>
+            <div class="cell">E</div>
+            <div class="cell">T</div>
+        </div>
+        <div class="row">
+            <div class="cell">T</div>
+            <div class="cell">E</div>
+            <div class="cell">M</div>
+            <div class="cell">P</div>
+            <div class="cell">O</div>
+            <div class="cell">L</div>
+            <div class="cell">E</div>
+            <div class="cell">I</div>
+            <div class="cell">L</div>
+            <div class="cell">T</div>
+        </div>
+        <div class="row">
+            <div class="cell">O</div>
+            <div class="cell">M</div>
+            <div class="cell">A</div>
+            <div class="cell">R</div>
+            <div class="cell">E</div>
+            <div class="cell">I</div>
+            <div class="cell">L</div>
+            <div class="cell">I</div>
+            <div class="cell">I</div>
+            <div class="cell">O</div>
+        </div>
+        <div class="row">
+            <div class="cell">V</div>
+            <div class="cell">E</div>
+            <div class="cell">N</div>
+            <div class="cell">T</div>
+            <div class="cell">O</div>
+            <div class="cell">N</div>
+            <div class="cell">U</div>
+            <div class="cell">N</div>
+            <div class="cell">C</div>
+            <div class="cell">N</div>
+        </div>
+        <div class="row">
+            <div class="cell">E</div>
+            <div class="cell">R</div>
+            <div class="cell">B</div>
+            <div class="cell">A</div>
+            <div class="cell">S</div>
+            <div class="cell">O</div>
+            <div class="cell">L</div>
+            <div class="cell">E</div>
+            <div class="cell">A</div>
+            <div class="cell">I</div>
+        </div>
+        <div class="row">
+            <div class="cell">S</div>
+            <div class="cell">T</div>
+            <div class="cell">E</div>
+            <div class="cell">L</div>
+            <div class="cell">L</div>
+            <div class="cell">A</div>
+            <div class="cell">M</div>
+            <div class="cell">A</div>
+            <div class="cell">N</div>
+            <div class="cell">L</div>
+        </div>
+        <div class="row">
+            <div class="cell">T</div>
+            <div class="cell">R</div>
+            <div class="cell">E</div>
+            <div class="cell">N</div>
+            <div class="cell">O</div>
+            <div class="cell">G</div>
+            <div class="cell">O</div>
+            <div class="cell">G</div>
+            <div class="cell">G</div>
+            <div class="cell">O</div>
+        </div>
+    </div>
+</div>
+
+<div class="words-list">
+    <h3>🔤 PAROLE DA TROVARE (15 parole):</h3>
+    <div class="words-grid">
+        <div class="word-item">CASA</div>
+        <div class="word-item">LIBRO</div>
+        <div class="word-item">NUVOLA</div>
+        <div class="word-item">CHITARRA</div>
+        <div class="word-item">ESTATE</div>
+        <div class="word-item">ROSA</div>
+        <div class="word-item">TEMPO</div>
+        <div class="word-item">MARE</div>
+        <div class="word-item">VENTO</div>
+        <div class="word-item">ERBA</div>
+        <div class="word-item">STELLA</div>
+        <div class="word-item">TRENO</div>
+        <div class="word-item">SOLE</div>
+        <div class="word-item">PIANO</div>
+        <div class="word-item">ARTE</div>
+    </div>
+</div>
+
+<div class="solution-box">
+    <h3>🎁 LA TUA SORPRESA È...</h3>
+    <p style="text-align: center;"><em>Scrivi qui sotto le lettere rimaste non cerchiate, nell'ordine:</em></p>
+    <div class="solution-text">
+        _ _ _ _ _ _ _ _   _ _ _ _ _ _ _ _   _ _ _ _ _
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 30px;" class="no-print">
+    <button onclick="window.print()">🖨️ Stampa PDF</button>
+</div>
+
+<script>
+    function savePDF() {
+        window.print();
+    }
+</script>
+```
+
+</body>
+</html>
